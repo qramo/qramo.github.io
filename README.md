@@ -1,20 +1,20 @@
-### Hi there 👋
+# qramo.github.io
 
-- 🔭 I’m currently working on ...
+[qramo.github.io](https://qramo.github.io) のソースです。[Astro](https://astro.build) で構築し、GitHub Actions で GitHub Pages に自動デプロイしています。
 
-- 🌱 I’m currently learning ...
+## 開発
 
-<!--
-**qramo/qramo** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+```bash
+npm install
+npm run dev      # http://localhost:4321 で開発サーバーを起動
+npm run build    # dist/ に静的サイトを出力
+npm run preview  # ビルド結果をローカルでプレビュー
+```
 
-Here are some ideas to get you started:
+## 構成
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- `src/pages/` — ページ（`index.astro` がトップページ、`works/` が作品一覧・詳細）
+- `src/content/works/` — Works のコンテンツ（Markdown）
+- `src/layouts/` — 共通レイアウト
+
+`main` ブランチに push すると、`.github/workflows/deploy.yml` が自動でビルド・デプロイします。

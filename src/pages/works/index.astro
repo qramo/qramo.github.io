@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const works = (await getCollection('works', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="Works | qramo">
+  <h1>Works</h1>
+  <ul class="work-list">
+    {works.map((work) => (
+      <li>
+        <a href={`/works/${work.id}/`}>{work.data.title}</a>
+        <p>{work.data.description}</p>
+        <ul class="tags">
+          {work.data.tags.map((tag) => <li>{tag}</li>)}
+        </ul>
+      </li>
+    ))}
+  </ul>
+</Layout>
+
+<style>
+  .work-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .work-list li p {
+    margin: 0.35rem 0;
+    color: var(--color-muted);
+  }
+
+  .work-list .tags {
+    margin: 0.5rem 0 0;
+  }
+</style>

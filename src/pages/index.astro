@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const works = (await getCollection('works', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="qramo のプロフィール">
+  <section>
+    <h1>こんにちは、qramoです。</h1>
+    <p>
+      アート、子ども向けプログラミング、電子工作、DIY（特に車や家について）に興味があり、
+      これらのトピックについて頻繁に投稿しています。最近は写真とアナログシンセサイザーに夢中です。
+    </p>
+    <p>小学生の子供の父親でもあり、子育てについても熱心に話せます。</p>
+    <p>2023年4月より、東京大学 大学院情報学環で特任研究員を務めています。</p>
+    <ul class="tags">
+      <li>アート</li>
+      <li>子ども向けプログラミング</li>
+      <li>電子工作 / DIY</li>
+      <li>写真</li>
+      <li>アナログシンセサイザー</li>
+    </ul>
+    <p>
+      <a href="https://twitter.com/qramo" target="_blank" rel="noopener noreferrer">X (@qramo)</a>
+      でも発信しています。
+    </p>
+  </section>
+
+  {works.length > 0 && (
+    <section>
+      <h2>Works</h2>
+      <ul class="work-list">
+        {works.map((work) => (
+          <li>
+            <a href={`/works/${work.id}/`}>{work.data.title}</a>
+            <p>{work.data.description}</p>
+          </li>
+        ))}
+      </ul>
+      <p><a href="/works/">すべての Works を見る &rarr;</a></p>
+    </section>
+  )}
+</Layout>
+
+<style>
+  .work-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .work-list li p {
+    margin: 0.25rem 0 0;
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const works = await getCollection('works', ({ data }) => !data.draft);
+  return works.map((work) => ({
+    params: { id: work.id },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+const { Content } = await render(work);
+---
+
+<Layout title={`${work.data.title} | qramo`} description={work.data.description}>
+  <article>
+    <h1>{work.data.title}</h1>
+    <ul class="tags">
+      {work.data.tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    <Content />
+    {work.data.link && (
+      <p><a href={work.data.link} target="_blank" rel="noopener noreferrer">関連リンクを見る &rarr;</a></p>
+    )}
+  </article>
+  <p><a href="/works/">&larr; Works 一覧へ戻る</a></p>
+</Layout>
